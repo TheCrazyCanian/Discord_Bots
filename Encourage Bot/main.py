@@ -1,11 +1,6 @@
-from cgi import test
-from optparse import Values
 import os
-import string
-from typing import List
 import discord
 from dotenv import load_dotenv
-from mysqlx import Column
 import requests
 import json
 import random
