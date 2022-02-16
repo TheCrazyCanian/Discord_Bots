@@ -1,6 +1,7 @@
 from cgi import test
 from optparse import Values
 import os
+import string
 from typing import List
 import discord
 from dotenv import load_dotenv
@@ -341,12 +342,26 @@ async def on_message(message):
             if list != 0:
                 s = ""
                 for i in list:
-                    s += str(i) + "\n"
+                    s += str(i[0]) + ", " + str(i[1]) + "\n"
                 await message.channel.send(s) 
             else:
                  await message.channel.send("SQL statement has no output")           
         except Exception as e:
             await message.channel.send("Error: %s" %(e))
+    
+    # Explanation of all the functions that can be accessed from Discord.
+    if msg.startswith("$help"):
+        string = "This is the Encourage Bot. This bot reads messages and when it sees a sad word, it will send an encouraging message or an inspirational quote.\n" \
+        "Commands that can be used:\n" \
+            "\t**$newE {Value}** -> Creates a new Encouragement in the database with the given value.\n" \
+            "\t**$newS {Value}** -> Creates a new Sad Word in the database with the given value.\n" \
+            "\t**$delE {id}** -> Deletes an Encouragement with the given id.\n" \
+            "\t**$delS {id}** -> Deletes a Sad Word with the given id.\n" \
+            "\t**$showF {Encouragements | Sad_Words}** -> Shows the full table. Gives error if table too big.\n" \
+            "\t**$showL {Encouragements | Sad_Words}** -> Shows the last 10 rows of the table based on id.\n" \
+            "\t**$sql {statement}** -> Allows the user to execute a given SQL statement. If the statement is a SELECT statement, the return value will be printed. Possible databases to work on: Encouragements and Sad_Words.\n" \
+            "\t**$help** -> To get the help page printed on screen\n" 
+        await message.channel.send(string) 
             
             
 client.run(TOKEN)
